@@ -1,0 +1,1 @@
+[описание задачи](https://scitator.notion.site/e5db49d792f6476a8b3ce19fd91c6655)
