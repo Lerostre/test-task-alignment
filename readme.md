@@ -5,7 +5,7 @@ Your Language Model is Secretly a Reward Model
 ](https://arxiv.org/pdf/2305.18290.pdf) и [Beyond Reverse KL: Generalizing Direct Preference Optimization with Diverse Divergence Constraints](https://openreview.net/pdf?id=2cRzmWXK9N). Здесь мы посмотрим, как заставить модель генерировать тексты с каким-то определённым условием, как можно обучить её делать это при помощи DPO архитектуры, как её можно модифицировать при помощи других $f$-дивергенций, и подумаем, как можно это дело улучшить. Про чвсть с кодом лучше смотреть ноутбуки, они тоже подробно описаны, они внизу отчёта в содержании, здесь только общие описания \
 [Описание задачи](https://scitator.notion.site/e5db49d792f6476a8b3ce19fd91c6655)
 
-### [Level 1. Loss comparison]((https://nbviewer.org/github/Lerostre/test-task-alignment/blob/main/1.%20Loss%20comparison.ipynb))
+### [Level 1. Loss comparison](https://nbviewer.org/github/Lerostre/test-task-alignment/blob/main/1.%20Loss%20comparison.ipynb)
 
 Одной из первых на данном этапе была задача адаптации модели для генерации более позитивных текстов (поскольку исходная версия модели учится и на позитивных, и на негативных отзывах, соответственно, и генерирует тоже оба класса отзывов). И один из вариантов решения -- вставка ключевых слов в промпт, что и было реализовано. В целом при решении были следующие идеи:
 - **Beam Search**: во время beam search можно оставлять такие опции, которые не только более вероятны, но и имеют положительную тональность. Это можно сделать, например, при помощи той же gpt2, если взять другую архитектуру, но тогда нужно будет переделывать функцию генерации, что, во-первых, не очень очевидно, во-вторых, будет не совсем эффективно. 
@@ -34,7 +34,7 @@ $$
 
 <img src="src/basic_box_comparison.png" width="700px">
 
-### [Level 2. F-divergences]((https://nbviewer.org/github/Lerostre/test-task-alignment/blob/main/2.%20F-divergences.ipynb))
+### [Level 2. F-divergences](https://nbviewer.org/github/Lerostre/test-task-alignment/blob/main/2.%20F-divergences.ipynb)
 
 Здесь, в первую очередь, стоит заметить, что лосс в обобщённом виде, где $f′$ -- это производная произвольной дивергенции, в `DPOTrainer` является обратной КЛ-дивергенцией, которую и нужно менять. Опорой для кода в этом задании служит таблица с уже посчитанными производными:
 
