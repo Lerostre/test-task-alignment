@@ -5,7 +5,7 @@ Your Language Model is Secretly a Reward Model
 ](https://arxiv.org/pdf/2305.18290.pdf) и [Beyond Reverse KL: Generalizing Direct Preference Optimization with Diverse Divergence Constraints](https://openreview.net/pdf?id=2cRzmWXK9N). Здесь мы посмотрим, как заставить модель генерировать тексты с каким-то определённым условием, как можно обучить её делать это при помощи DPO архитектуры, как её можно модифицировать при помощи других $f$-дивергенций, и подумаем, как можно это дело улучшить. Про чвсть с кодом лучше смотреть ноутбуки, они тоже подробно описаны, они внизу отчёта в содержании, здесь только общие описания \
 [Описание задачи](https://scitator.notion.site/e5db49d792f6476a8b3ce19fd91c6655)
 
-### Level 1. Loss comparison
+### [Level 1. Loss comparison]((https://nbviewer.org/github/Lerostre/test-task-alignment/blob/main/1.%20Loss%20comparison.ipynb))
 
 Одной из первых на данном этапе была задача адаптации модели для генерации более позитивных текстов (поскольку исходная версия модели учится и на позитивных, и на негативных отзывах, соответственно, и генерирует тоже оба класса отзывов). И один из вариантов решения -- вставка ключевых слов в промпт, что и было реализовано. В целом при решении были следующие идеи:
 - **Beam Search**: во время beam search можно оставлять такие опции, которые не только более вероятны, но и имеют положительную тональность. Это можно сделать, например, при помощи той же gpt2, если взять другую архитектуру, но тогда нужно будет переделывать функцию генерации, что, во-первых, не очень очевидно, во-вторых, будет не совсем эффективно. 
@@ -34,7 +34,7 @@ $$
 
 <img src="src/basic_box_comparison.png" width="700px">
 
-### Level 2. F-divergences
+### [Level 2. F-divergences]((https://nbviewer.org/github/Lerostre/test-task-alignment/blob/main/2.%20F-divergences.ipynb))
 
 Здесь, в первую очередь, стоит заметить, что лосс в обобщённом виде, где $f′$ -- это производная произвольной дивергенции, в `DPOTrainer` является обратной КЛ-дивергенцией, которую и нужно менять. Опорой для кода в этом задании служит таблица с уже посчитанными производными:
 
@@ -69,7 +69,7 @@ $$
 ![image](https://github.com/Lerostre/test-task-alignment/assets/90250718/84193606-2b74-4f25-969c-43c427b743c6)
 
 
-### Level 3. Improvements
+### [Level 3. Improvements](https://nbviewer.org/github/Lerostre/test-task-alignment/blob/main/3.%20Improvements.ipynb)
 
 Способы улучшить представленные методы: 
 Основной идеей здесь была попытка протестировать другие функции дивергенции и посмотреть, как они влияют на поведение модели. Часть из них -- Total Variation и Chi-squared -- уже была представлена в статье, но не рассмотрена подробно.
@@ -93,12 +93,12 @@ $$
 К сожалению, сложно сказать, какая из них окажется лучшей, их свойства не так просты, как у остальных. Пока что у нас чисто исследовательские цели, интерпретацию оставим на потом.
 Что-то по итогу удалось достичь с {\text{CNP} \chi^2} - она сильно повышает diversity, сохраняя при этом reward КЛ-дивергенции, что возможно неплохо. Подробнее в ноутбуке
 
-<img src="src/new_diversities.html" width="700px">
+<img src="src/new_diversities.png" width="700px">
 
 ### Содержание репозитория
 
 1. [**1. Loss comparison.ipynb**](https://nbviewer.org/github/Lerostre/test-task-alignment/blob/main/1.%20Loss%20comparison.ipynb) - Тут есть подробное описание процедуры генерации условных отзывов, обучение `DPOTrainer`, наглядное сравнение лоссов - через графики распределений, через анализ промптов и так далее. Это про анализ статьи про DPO.
-2. [**2. F-divergences.ipynb**](https://nbviewer.org/github/Lerostre/test-task-alignment/blob/main/1.%20F-divergences.ipynb) - Тут лежит влияние разных дивергенций на баланс между diversity и reward. Соответствует статье Beyond RKL
+2. [**2. F-divergences.ipynb**](https://nbviewer.org/github/Lerostre/test-task-alignment/blob/main/2.%20F-divergences.ipynb) - Тут лежит влияние разных дивергенций на баланс между diversity и reward. Соответствует статье Beyond RKL
 3. [**3. Improvements.ipynb**](https://nbviewer.org/github/Lerostre/test-task-alignment/blob/main/3.%20Improvements.ipynb) - Здесь есть немного попыток улучшить модель, единственное, что не хватает осмысленного анализа
 4. [**pipeline.py**](https://github.com/Lerostre/test-task-alignment/blob/main/pipeline.py) - В этом модуле лежит всё, что нужно для общего пайплайна обучения. Генерация промптов, обучение модели, генерация новых отзывов, аггрегация и хранение данных
 5. [**utils.py**](https://github.com/Lerostre/test-task-alignment/blob/main/utils.py) - Здесь разные мелкие функции, например, генерация сида, $f$-дивергенции и прочее
