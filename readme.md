@@ -105,6 +105,6 @@ $$
 - [**utils.py**](https://github.com/Lerostre/test-task-alignment/blob/main/utils.py) - Здесь разные мелкие функции, например, генерация сида, $f$-дивергенции и прочее
 - [**trainers.py**](https://github.com/Lerostre/test-task-alignment/blob/main/trainers.py) - Здесь лишь один модифицированный для пункта 2 `DPOTrainer`. Планировалось сделать ещё другие, по аналогии с репозиторием HALO, но до этого руки так и не дошли
 - [**readme.md**](#report) - Это собственно отчёт о проделанной работе
-- **./experiments** - В этой папке все эксперименты. В основном это целая куча разных генераций модели, например, с hinge-лоссом, с rkl-дивергенцией и прочее
-- **./src** - Здесь лежат картинки для отчёта
-- **./hf_dataset** - Это датасет из пар winner-loser, использованный для обучения
+- [**./experiments**](https://github.com/Lerostre/test-task-alignment/tree/main/experiments) - В этой папке все эксперименты. В основном это целая куча разных генераций модели, например, с hinge-лоссом, с rkl-дивергенцией и прочее
+- [**./src**](https://github.com/Lerostre/test-task-alignment/tree/main/src) - Здесь лежат картинки для отчёта
+- [**./hf_dataset**](https://github.com/Lerostre/test-task-alignment/tree/main/hf_dataset) - Это датасет из пар winner-loser, использованный для обучения
