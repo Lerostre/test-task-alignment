@@ -2,7 +2,7 @@
 
 Это отчёт по задаче воспроизведения результатов статей [Direct Preference Optimization:
 Your Language Model is Secretly a Reward Model
-](https://arxiv.org/pdf/2305.18290.pdf) и [Beyond Reverse KL: Generalizing Direct Preference Optimization with Diverse Divergence Constraints](https://openreview.net/pdf?id=2cRzmWXK9N). Здесь мы посмотрим, как заставить модель генерировать тексты с каким-то определённым условием, как можно обучить её делать это при помощи DPO архитектуры, как её можно модифицировать при помощи других $f$-дивергенций, и подумаем, как можно это дело улучшить. Про чвсть с кодом лучше смотреть ноутбуки, они тоже подробно описаны, они внизу отчёта в содержании, здесь только общие описания \
+](https://arxiv.org/pdf/2305.18290.pdf) и [Beyond Reverse KL: Generalizing Direct Preference Optimization with Diverse Divergence Constraints](https://openreview.net/pdf?id=2cRzmWXK9N). Здесь мы посмотрим, как заставить модель генерировать тексты с каким-то определённым условием, как можно обучить её делать это при помощи DPO архитектуры, как её можно модифицировать при помощи других $f$-дивергенций, и подумаем, как можно это дело улучшить. Про чвсть с кодом лучше смотреть ноутбуки, они тоже подробно описаны, их можно запускать прямо по блокам - все зависимости там есть. Их список внизу отчёта в содержании, здесь только общие описания \
 [Описание задачи](https://scitator.notion.site/e5db49d792f6476a8b3ce19fd91c6655)
 
 ### [Level 1. Loss comparison](https://nbviewer.org/github/Lerostre/test-task-alignment/blob/main/1.%20Loss%20comparison.ipynb)
@@ -98,13 +98,13 @@ $$
 
 ### Содержание репозитория
 
-1. [**1. Loss comparison.ipynb**](https://nbviewer.org/github/Lerostre/test-task-alignment/blob/main/1.%20Loss%20comparison.ipynb) - Тут есть подробное описание процедуры генерации условных отзывов, обучение `DPOTrainer`, наглядное сравнение лоссов - через графики распределений, через анализ промптов и так далее. Это про анализ статьи про DPO.
-2. [**2. F-divergences.ipynb**](https://nbviewer.org/github/Lerostre/test-task-alignment/blob/main/2.%20F-divergences.ipynb) - Тут лежит влияние разных дивергенций на баланс между diversity и reward. Соответствует статье Beyond RKL
-3. [**3. Improvements.ipynb**](https://nbviewer.org/github/Lerostre/test-task-alignment/blob/main/3.%20Improvements.ipynb) - Здесь есть немного попыток улучшить модель, единственное, что не хватает осмысленного анализа
-4. [**pipeline.py**](https://github.com/Lerostre/test-task-alignment/blob/main/pipeline.py) - В этом модуле лежит всё, что нужно для общего пайплайна обучения. Генерация промптов, обучение модели, генерация новых отзывов, аггрегация и хранение данных
-5. [**utils.py**](https://github.com/Lerostre/test-task-alignment/blob/main/utils.py) - Здесь разные мелкие функции, например, генерация сида, $f$-дивергенции и прочее
-6. [**trainers.py**](https://github.com/Lerostre/test-task-alignment/blob/main/trainers.py) - Здесь лишь один модифицированный для (2) `DPOTrainer`. Планировалось сделать ещё другие, по аналогии с репозиторием HALO, но до этого руки таки не дошли
-7. [**readme,md**](#report) - Это собственно отчёт о проделанной работе
-8. **/experiments/** - В этой папке все эксперименты. В основном это целая куча разных генераций модели, например, с hinge-лоссом, с rkl-дивергенцией и прочее \
-9. **/src/** - Здесь лежат картинки для отчёта
-10. **/hf_dataset/** - Это датасет из пар winner-loser, использованный для обучения \
+- [**1. Loss comparison.ipynb**](https://nbviewer.org/github/Lerostre/test-task-alignment/blob/main/1.%20Loss%20comparison.ipynb) - Тут есть подробное описание процедуры генерации условных отзывов, обучение `DPOTrainer`, наглядное сравнение лоссов - через графики распределений, через анализ промптов и так далее. Это про анализ статьи про DPO.
+- [**2. F-divergences.ipynb**](https://nbviewer.org/github/Lerostre/test-task-alignment/blob/main/2.%20F-divergences.ipynb) - Тут лежит влияние разных дивергенций на баланс между diversity и reward. Соответствует статье Beyond RKL
+- [**3. Improvements.ipynb**](https://nbviewer.org/github/Lerostre/test-task-alignment/blob/main/3.%20Improvements.ipynb) - Здесь есть немного попыток улучшить модель, единственное, что не хватает осмысленного анализа
+- [**pipeline.py**](https://github.com/Lerostre/test-task-alignment/blob/main/pipeline.py) - В этом модуле лежит всё, что нужно для общего пайплайна обучения. Генерация промптов, обучение модели, генерация новых отзывов, аггрегация и хранение данных
+- [**utils.py**](https://github.com/Lerostre/test-task-alignment/blob/main/utils.py) - Здесь разные мелкие функции, например, генерация сида, $f$-дивергенции и прочее
+- [**trainers.py**](https://github.com/Lerostre/test-task-alignment/blob/main/trainers.py) - Здесь лишь один модифицированный для (2) `DPOTrainer`. Планировалось сделать ещё другие, по аналогии с репозиторием HALO, но до этого руки таки не дошли
+- [**readme,md**](#report) - Это собственно отчёт о проделанной работе
+- **./experiments** - В этой папке все эксперименты. В основном это целая куча разных генераций модели, например, с hinge-лоссом, с rkl-дивергенцией и прочее \
+- **./src** - Здесь лежат картинки для отчёта
+- **./hf_dataset** - Это датасет из пар winner-loser, использованный для обучения \
